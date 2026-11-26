@@ -1,0 +1,18 @@
+# Starter project-level apm.yml for web-spa and web-static projects.
+# Copy to apm.yml during cstack-init and run `apm install` to generate apm.lock.yaml.
+name: project-skills
+version: 0.1.0
+description: Project-scoped community skills for cstack web projects.
+
+targets:
+  - antigravity
+  - claude
+  - codex
+
+dependencies:
+  apm:
+    - cloudflare/skills
+    - pbakaus/impeccable
+    - vercel-labs/agent-skills
+    - vercel-labs/agent-browser
+    - GoogleChrome/modern-web-guidance

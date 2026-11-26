@@ -62,4 +62,15 @@ Use this archetype for interactive web applications—dashboards, tools, househo
 ## Verification & UI Checks
 
 - `mise run check` runs `cf workers types`, `tsrs -b`, `oxlint --deny-warnings --report-unused-disable-directives`, `oxfmt --check`, and pure-logic tests.
-- Visually inspect UI changes in the running app at desktop and mobile (390px) widths, in both light and dark modes. Do not add jsdom or component-interaction tests.
+- Visually inspect UI changes in the running app at desktop and mobile (390px) widths, in both light and dark modes, using harness-native browser tools first or `agent-browser` when harness tooling does not apply. Do not add jsdom or component-interaction tests.
+
+## Recommended Community Skills
+
+Offer to install these project-scoped skills during `cstack-init` (see [docs/standards/skills.md](../standards/skills.md) and [configs/agents/apm.web.yml](../../configs/agents/apm.web.yml)):
+
+- `cloudflare/skills`: first-party Workers, D1, Durable Objects, R2, Queues, and Agents SDK guidance.
+- `pbakaus/impeccable`: design language (`DESIGN.md`), critique, polish, and accessibility audits.
+- `vercel-labs/agent-skills`: React best practices and web design guidelines (ignoring Next.js/SSR rules and manual memoization).
+- `vercel-labs/agent-browser`: native Rust CDP browser CLI when harness-native browser tooling is unavailable.
+- `GoogleChrome/modern-web-guidance`: modern HTML/CSS/browser APIs and Baseline guidance.
+- Package-bundled TanStack skills under `node_modules/@tanstack/*/skills` (documented in `AGENTS.md`).

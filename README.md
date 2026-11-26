@@ -22,6 +22,7 @@ Rather than maintaining boilerplate templates that quickly rot, `cstack` documen
 - [docs/standards/cloudflare.md](docs/standards/cloudflare.md): `cf` CLI, `cloudflare.config.ts`, first-party bindings, Workers Static Assets, and free-tier discipline.
 - [docs/standards/testing.md](docs/standards/testing.md): The Testing Charter: high-signal tests only, mechanical anti-bloat rules, and *Break It to Prove It*.
 - [docs/standards/agents.md](docs/standards/agents.md): Single-source `AGENTS.md`, `@AGENTS.md` `CLAUDE.md` shim, `hk` stop hooks, safety deny lists, and skill installation.
+- [docs/standards/skills.md](docs/standards/skills.md): Custom, vendored, and community skill catalog (global and per-archetype) with installer-agnostic setup.
 
 ### Archetypes
 - [docs/archetypes/web-spa.md](docs/archetypes/web-spa.md): Vite + React 19 (Compiler) + Tailwind v4 + shadcn/Base UI + TanStack + Hono + Cloudflare Workers + Valibot + Drizzle.
@@ -35,12 +36,21 @@ Rather than maintaining boilerplate templates that quickly rot, `cstack` documen
 - [skills/cstack-refresh/SKILL.md](skills/cstack-refresh/SKILL.md): Check upstream tooling/rules and propose updates to `cstack`.
 - [skills/cstack-retro/SKILL.md](skills/cstack-retro/SKILL.md): Harvest real-world lessons from a project back into `cstack`.
 
-## Installing Skills Locally
+## Installing Skills
 
-Link all `cstack` skills into your global agent skill directories (Antigravity, Claude Code, Codex):
+Pick whichever workflow fits how you use `cstack`:
 
-```bash
-mise run install:skills
-```
+- **Quick global install (no clone required):**
+  ```bash
+  bunx skills add CS-5/cstack -g
+  ```
+- **Local clone or fork (live symlinks into Antigravity, Claude Code, and Codex):**
+  ```bash
+  mise run install:skills
+  ```
+- **Optional global community skills** (see [docs/standards/skills.md](docs/standards/skills.md) for the curated catalog and APM manifests):
+  ```bash
+  mise run install:skills:community
+  ```
 
 To use `cstack` in a new empty folder, invoke `cstack-init` from any agent. To check an existing repo against current standards, invoke `cstack-audit`.

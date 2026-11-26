@@ -36,9 +36,10 @@ Identify the repo's archetype (`web-spa`, `web-static`, `ts-service`, `go-app`, 
    - Apply **Break It to Prove It**: *"If I invert the core condition or delete the security check, does this test fail?"*
    - Actively recommend **deleting** low-signal or redundant tests, and flag genuine untested high-value zones (auth, permissions, tricky pure logic).
 
-5. **Agent Ergonomics (`docs/standards/agents.md`)**
+5. **Agent Ergonomics (`docs/standards/agents.md`, `docs/standards/skills.md`)**
    - Single-source `AGENTS.md` with `CLAUDE.md` containing only `@AGENTS.md` (no duplicate instructions).
    - `.claude/settings.json` (`Stop` hook + safety `deny` rules for deploy/push/remote migrations) and `.codex/hooks.json`.
+   - If the repo uses `apm.yml`, confirm `apm.lock.yaml` is committed and archetype-recommended skills from `docs/standards/skills.md` are considered.
 
 ## Output Format
 

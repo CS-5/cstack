@@ -52,5 +52,15 @@ Astro's `.astro` compiler (`@astrojs/check` / Volar) currently requires the Type
 
 - **No client framework islands** unless a specific interactive widget genuinely cannot be done with HTML/CSS and minimal vanilla JS.
 - **Content lives in collections, never inline arrays.** Query `src/content/` instead of hardcoding repeating data in page frontmatter.
-- **Verify against the production build (`preview`), not dev.** Check built metadata, links, responsive layout (1440px and 390px), light/dark modes, and performance/accessibility budgets (Lighthouse CI when warranted: Perf >= 0.95, A11y = 1.00, SEO = 1.00).
+- **Verify against the production build (`preview`), not dev.** Check built metadata, links, responsive layout (1440px and 390px), light/dark modes (via harness-native browser tools first, or `agent-browser` for terminal/scripted runs), and performance/accessibility budgets (Lighthouse CI when warranted: Perf >= 0.95, A11y = 1.00, SEO = 1.00).
 - **Scripts in `tools/` use erasable TypeScript syntax** so they execute directly with native type stripping and no build step.
+
+## Recommended Community Skills
+
+Offer to install these project-scoped skills during `cstack-init` (see [docs/standards/skills.md](../standards/skills.md) and [configs/agents/apm.web.yml](../../configs/agents/apm.web.yml)):
+
+- `cloudflare/skills`: first-party Cloudflare Workers Static Assets and platform guidance.
+- `pbakaus/impeccable`: design language (`DESIGN.md`), critique, polish, and accessibility audits.
+- `vercel-labs/agent-skills` (`web-design-guidelines`): UI/UX and accessibility checks.
+- `vercel-labs/agent-browser`: native Rust CDP browser CLI when harness-native browser tooling is unavailable.
+- `GoogleChrome/modern-web-guidance`: modern HTML/CSS/browser APIs and Baseline guidance.

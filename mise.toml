@@ -3,7 +3,7 @@ idiomatic_version_file_enable_tools = []
 minimum_release_age = "7d"
 
 [tasks."install:skills"]
-description = "Symlink cstack skills into global Antigravity, Claude Code, and Codex skill directories"
+description = "Symlink cstack's own skills into global Antigravity, Claude Code, and Codex skill directories"
 run = """
 #!/usr/bin/env bash
 set -euo pipefail
@@ -21,6 +21,15 @@ for target in "${targets[@]}"; do
   done
   echo "Linked cstack skills into $target"
 done
+"""
+
+[tasks."install:skills:community"]
+description = "Install optional global community skills via bunx skills add (mattpocock/skills, cloudflare/security-audit-skill)"
+run = """
+#!/usr/bin/env bash
+set -euo pipefail
+bunx skills add mattpocock/skills -g
+bunx skills add cloudflare/security-audit-skill --skill security-audit -g
 """
 
 [tasks.check]

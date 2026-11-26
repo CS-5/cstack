@@ -1,0 +1,38 @@
+# Starter project-level apm.yml for go-app projects.
+# Copy to apm.yml during cstack-init and run `apm install` to generate apm.lock.yaml.
+# Pin to a specific commit SHA in real projects so `apm install --frozen` stays reproducible.
+name: project-skills
+version: 0.1.0
+description: Project-scoped community skills for cstack Go projects.
+
+targets:
+  - antigravity
+  - claude
+  - codex
+
+dependencies:
+  apm:
+    - git: samber/cc-skills-golang
+      skills:
+        - golang-benchmark
+        - golang-code-style
+        - golang-concurrency
+        - golang-context
+        - golang-database
+        - golang-dependency-injection
+        - golang-dependency-management
+        - golang-design-patterns
+        - golang-documentation
+        - golang-error-handling
+        - golang-lint
+        - golang-modernize
+        - golang-naming
+        - golang-observability
+        - golang-performance
+        - golang-project-layout
+        - golang-safety
+        - golang-security
+        - golang-stretchr-testify
+        - golang-structs-interfaces
+        - golang-testing
+        - golang-troubleshooting

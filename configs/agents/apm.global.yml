@@ -1,0 +1,15 @@
+# Optional personal global APM manifest for universal community skills.
+# Casual cstack users can skip APM and use `bunx skills add CS-5/cstack -g` or `mise run install:skills`.
+name: cstack-global-skills
+version: 0.1.0
+description: Optional global community skillpack paired with cstack.
+
+targets:
+  - antigravity
+  - claude
+  - codex
+
+dependencies:
+  apm:
+    - mattpocock/skills
+    - cloudflare/security-audit-skill

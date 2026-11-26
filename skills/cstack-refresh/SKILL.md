@@ -29,6 +29,10 @@ Read the current state of `cstack` first (`docs/standards/`, `configs/`, and `co
    - Check `mise`, `hk` (new builtins, `hk agent stop-hook` flags, `Config.pkl` release URL in `configs/mise/hk.base.pkl`), and `bun` (`bunfig.toml` release-age syntax).
    - Check `golangci-lint` v2 releases for newly added or deprecated linters in `configs/go/.golangci.yml`.
 
+5. **Curated Community Skills (`docs/standards/skills.md`)**
+   - Check the community skill repositories listed in `docs/standards/skills.md`, `configs/agents/apm.global.yml`, `configs/agents/apm.web.yml`, and `configs/agents/apm.go.yml` for renamed skill paths, deprecations, or notable new skills worth adding.
+   - Check any vendored skill's `UPSTREAM.md` against its upstream repo.
+
 ## Proposal Rules
 
 - **Respect the 7-day release-age philosophy:** Note release dates; call out anything newer than 7 days or pre-v1 clearly.

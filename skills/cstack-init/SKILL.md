@@ -25,7 +25,7 @@ Resolve the real directory containing this `SKILL.md` file: `../../docs/` and `.
    - For `go-app` with HTTP: confirm HTTP router choice (`net/http`, Fiber, or other).
 
 2. **Load Only Relevant Specs**
-   - Always read `docs/principles.md`, `docs/standards/tooling.md`, `docs/standards/linting.md`, `docs/standards/testing.md`, and `docs/standards/agents.md`.
+   - Always read `docs/principles.md`, `docs/standards/tooling.md`, `docs/standards/linting.md`, `docs/standards/testing.md`, `docs/standards/agents.md`, and `docs/standards/skills.md`.
    - Load `docs/standards/cloudflare.md` if deploying to Cloudflare.
    - Load the single matching file under `docs/archetypes/`.
 
@@ -42,6 +42,7 @@ Resolve the real directory containing this `SKILL.md` file: `../../docs/` and `.
      - Tailor `configs/agents/AGENTS.template.md` → `AGENTS.md` and copy `configs/agents/CLAUDE.md` → `CLAUDE.md` (containing only `@AGENTS.md`).
      - Create `CODING_STANDARDS.md` naming each rule's enforcer and summarizing the project's boundaries, comment discipline, and Testing Charter.
      - Copy `configs/agents/claude-settings.json` → `.claude/settings.json` and `configs/agents/codex-hooks.json` → `.codex/hooks.json`.
+     - Offer the archetype's recommended community skills from `docs/standards/skills.md`: if accepted, copy the matching starter manifest (`configs/agents/apm.web.yml` or `configs/agents/apm.go.yml` → `apm.yml`) and run `apm install` (or install via `bunx skills add` if the project does not use APM).
 
 4. **Verify Before Finishing**
    - Install dependencies honoring the 7-day release-age gate (never add exceptions without asking the user first).

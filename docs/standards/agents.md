@@ -32,16 +32,18 @@ Template files live in [configs/agents/](../../configs/agents/).
 
 ## Cross-Agent Skills (`cstack/skills/`)
 
-`cstack` is consumed as a **local global skill pack**—no CLI binary or npm package to install or publish.
+See [skills.md](skills.md) for the full skill distribution standard and curated community skill catalog.
 
-### Installing Globally
+`cstack` stores custom skills (and any selectively customized community skills with `UPSTREAM.md`) in standard `skills/<name>/SKILL.md` directories so they work with `bunx skills add`, Microsoft `apm`, or local symlinks (`mise run install:skills`).
+
+### Installing Locally
 
 Run `mise run install:skills` from inside `cstack`. It symlinks each `skills/<name>` directory into:
 - `~/.gemini/antigravity/skills/` (Antigravity)
 - `~/.claude/skills/` (Claude Code)
 - `~/.codex/skills/` (Codex)
 
-Because they are symlinks, pulling `cstack` updates every harness immediately.
+Because they are symlinks, pulling `cstack` updates every harness immediately. Community skills stay opt-in (globally via `mise run install:skills:community` or `configs/agents/apm.global.yml`, and per project during `cstack-init`).
 
 ### Resolving `cstack` Inside a Skill
 
@@ -52,3 +54,12 @@ Skills locate `cstack` docs and configs in this order:
 ## Project-Local Library Docs
 
 Fast-moving libraries (such as TanStack Router, TanStack DB, and MCP SDKs) ship current docs or skills inside `node_modules/`. Note their locations in `AGENTS.md` so agents read installed docs instead of relying on stale memory.
+
+## Browser Verification
+
+When an agent needs to inspect or interact with a running web app:
+
+1. **Use harness-native browser tools first** when the active environment provides them (e.g., a shared preview panel).
+2. **Use `vercel-labs/agent-browser`** (native Rust CDP CLI, pinned in `mise.toml` when used) when harness tooling is unavailable or does not fit (such as terminal-only agents or scripted screenshot checks).
+
+Skip Playwright CLI/MCP and Chrome DevTools MCP.

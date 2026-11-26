@@ -73,3 +73,9 @@ local go = new Group {
   }
 }
 ```
+
+## Recommended Community Skills
+
+Offer to install these project-scoped skills during `cstack-init` (see [docs/standards/skills.md](../standards/skills.md) and [configs/agents/apm.go.yml](../../configs/agents/apm.go.yml)):
+
+- `samber/cc-skills-golang`: Go idioms, concurrency, context, design patterns, dependency injection, `testify`, safety, and performance. Note in `AGENTS.md` that `CODING_STANDARDS.md` takes precedence over upstream SQL (`go-sqlbuilder` + Goose migrations) and error-handling examples.
