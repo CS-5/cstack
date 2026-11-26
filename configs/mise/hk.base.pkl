@@ -1,0 +1,81 @@
+/// Base hk.pkl template for TypeScript projects.
+/// Pin the hk release URL and min_hk_version to match mise.toml.
+amends "package://github.com/jdx/hk/releases/download/v2.12.0/hk@2.12.0#/Config.pkl"
+import "package://github.com/jdx/hk/releases/download/v2.12.0/hk@2.12.0#/Builtins.pkl"
+
+min_hk_version = "2.12.0"
+fail_fast = false
+
+local style = new Mapping<String, Step> {
+  ["trailing-whitespace"] = Builtins.trailing_whitespace
+  ["newlines"] = Builtins.newlines
+  ["merge-conflict"] = Builtins.check_merge_conflict
+  ["oxfmt"] = Builtins.oxfmt
+  ["oxlint"] = (Builtins.ox_lint) {
+    check = new CommandSpec {
+      command = new Command {
+        argv = List(
+          "oxlint",
+          "--deny-warnings",
+          "--report-unused-disable-directives",
+          "--no-error-on-unmatched-pattern",
+          "{{files}}"
+        )
+      }
+      effect = "read"
+    }
+    fix = new CommandSpec {
+      command = new Command {
+        argv = List("oxlint", "--deny-warnings", "--no-error-on-unmatched-pattern", "--fix", "{{files}}")
+      }
+      effect = "write"
+    }
+    // Sequence lint fixes after formatting so neither races the other on the same file.
+    depends = List("oxfmt")
+  }
+}
+
+local typecheck = new Step {
+  glob = List("**/*.ts", "**/*.tsx", "tsconfig*.json")
+  check = new CommandSpec {
+    command = "bun run typecheck"
+    effect = "write"
+  }
+}
+
+local test = new Step {
+  glob = List("src/**/*.ts", "src/**/*.tsx")
+  check = new CommandSpec {
+    command = "bun run test"
+    effect = "read"
+  }
+}
+
+hooks {
+  ["pre-commit"] {
+    fix = true
+    stash = "git"
+    steps = style
+  }
+  ["pre-push"] {
+    steps {
+      ["check"] {
+        check = new CommandSpec {
+          command = "bun run check"
+          effect = "write"
+        }
+      }
+    }
+  }
+  ["check"] {
+    steps {
+      ...style
+      ["typecheck"] = typecheck
+      ["test"] = test
+    }
+  }
+  ["fix"] {
+    fix = true
+    steps = style
+  }
+}

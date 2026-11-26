@@ -1,0 +1,87 @@
+[settings]
+idiomatic_version_file_enable_tools = []
+minimum_release_age = "7d"
+
+[tasks."install:skills"]
+description = "Symlink cstack skills into global Antigravity, Claude Code, and Codex skill directories"
+run = """
+#!/usr/bin/env bash
+set -euo pipefail
+root="$(pwd)"
+targets=(
+  "$HOME/.gemini/antigravity/skills"
+  "$HOME/.claude/skills"
+  "$HOME/.codex/skills"
+)
+for target in "${targets[@]}"; do
+  mkdir -p "$target"
+  for skill_dir in "$root"/skills/*/; do
+    skill_name="$(basename "$skill_dir")"
+    ln -sfn "${skill_dir%/}" "$target/$skill_name"
+  done
+  echo "Linked cstack skills into $target"
+done
+"""
+
+[tasks.check]
+description = "Validate CLAUDE.md shim, TOML/JSON configs, skill frontmatter, and relative markdown links"
+run = """
+#!/usr/bin/env python3
+import json
+import pathlib
+import re
+import sys
+import tomllib
+
+root = pathlib.Path.cwd()
+errors = []
+
+claude_md = root / "CLAUDE.md"
+if claude_md.is_symlink() or not claude_md.is_file() or claude_md.read_text(encoding="utf-8").strip() != "@AGENTS.md":
+    errors.append("CLAUDE.md must be a regular file containing only '@AGENTS.md'")
+
+for toml_path in sorted(root.rglob("*.toml")):
+    try:
+        tomllib.loads(toml_path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        errors.append(f"Invalid TOML in {toml_path.relative_to(root)}: {exc}")
+
+for json_path in sorted(root.rglob("*.json")):
+    try:
+        json.loads(json_path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        errors.append(f"Invalid JSON in {json_path.relative_to(root)}: {exc}")
+
+for skill_dir in sorted((root / "skills").iterdir()):
+    if not skill_dir.is_dir():
+        continue
+    skill_file = skill_dir / "SKILL.md"
+    if not skill_file.is_file():
+        errors.append(f"Missing SKILL.md in {skill_dir.relative_to(root)}")
+        continue
+    text = skill_file.read_text(encoding="utf-8")
+    if not text.startswith("---\\n") or "\\nname:" not in text or "\\ndescription:" not in text:
+        errors.append(f"Missing YAML frontmatter (name/description) in {skill_file.relative_to(root)}")
+
+link_re = re.compile(r"\\[[^\\]]+\\]\\(([^)]+)\\)")
+for md_path in sorted(root.rglob("*.md")):
+    if md_path.is_symlink() or md_path.name.endswith(".template.md"):
+        continue
+    text = md_path.read_text(encoding="utf-8")
+    for raw_target in link_re.findall(text):
+        if raw_target.startswith(("http://", "https://", "mailto:", "#")):
+            continue
+        rel = raw_target.split("#", 1)[0]
+        if not rel or "<" in rel:
+            continue
+        target = (md_path.parent / rel).resolve()
+        if not target.exists():
+            errors.append(f"Broken link in {md_path.relative_to(root)}: {raw_target}")
+
+if errors:
+    for err in errors:
+        print(f"ERROR: {err}", file=sys.stderr)
+    sys.exit(1)
+
+print("cstack checks passed.")
+"""

@@ -1,0 +1,130 @@
+version: "2"
+
+# Disable default output caps so every finding surfaces in one pass.
+issues:
+  max-same-issues: 0
+  max-issues-per-linter: 0
+
+linters:
+  default: none
+  enable:
+    # Correctness
+    - errcheck
+    - errchkjson
+    - errorlint
+    - govet
+    - ineffassign
+    - makezero
+    - nilerr
+    - nilnesserr
+    - noctx
+    - reassign
+    - rowserrcheck
+    - spancheck
+    - sqlclosecheck
+    - staticcheck
+    - unused
+    - wastedassign
+
+    # Idiom and API hygiene
+    - copyloopvar
+    - durationcheck
+    - exptostd
+    - fatcontext
+    - forcetypeassert
+    - intrange
+    - mirror
+    - modernize
+    - nosprintfhostport
+    - perfsprint
+    - prealloc
+    - predeclared
+    - recvcheck
+    - unconvert
+    - usestdlibvars
+
+    # Project conventions
+    - depguard
+    - forbidigo
+    - loggercheck
+    - nolintlint
+
+    # Tests
+    - testifylint
+    - thelper
+    - tparallel
+    - usetesting
+
+    # Source hygiene
+    - asasalint
+    - bidichk
+    - dupword
+    - gocheckcompilerdirectives
+    - iotamixing
+    - misspell
+    - musttag
+    - testableexamples
+    - unqueryvet
+
+  settings:
+    prealloc:
+      simple: true
+      range-loops: true
+      for-loops: false
+
+    testifylint:
+      disable:
+        # require guards preconditions; assert reports independent value checks together.
+        - require-error
+
+    errcheck:
+      exclude-functions:
+        - (io.Closer).Close
+        - (*os.File).Close
+        - (*database/sql.DB).Close
+        - (*database/sql.Conn).Close
+        - (*database/sql.Tx).Rollback
+        - (*database/sql.Rows).Close
+        - (*go.uber.org/zap.Logger).Sync
+
+    depguard:
+      rules:
+        slices-over-sort:
+          deny:
+            - pkg: sort
+              desc: use slices.Sort / SortFunc / SortStableFunc
+        rand-v2:
+          deny:
+            - pkg: math/rand
+              desc: use math/rand/v2
+        # Add per-project package boundary rules here.
+
+    staticcheck:
+      # Enable all ST checks (including ST1003 initialisms); leave package comments as a doc choice.
+      checks:
+        - all
+        - -ST1000
+
+    usetesting:
+      context-background: true
+      context-todo: true
+
+    perfsprint:
+      strconcat: false
+
+    nolintlint:
+      require-explanation: true
+      require-specific: true
+      allow-unused: false
+
+  exclusions:
+    rules:
+      - path: _test\.go
+        linters:
+          - forcetypeassert
+          - noctx
+
+formatters:
+  enable:
+    - gofumpt
+    - goimports

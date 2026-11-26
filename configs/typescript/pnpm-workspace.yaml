@@ -1,0 +1,5 @@
+# 7-day release-age gate (10080 minutes) for projects using pnpm.
+minimumReleaseAge: 10080
+
+# Explicit exceptions only for owned packages or approved trusted vendors—never default.
+# minimumReleaseAgeExclude: []

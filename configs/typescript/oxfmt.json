@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 120,
+  "ignorePatterns": [
+    "migrations/**",
+    "src/client/routeTree.gen.ts",
+    ".cloudflare/**",
+    "bun.lock",
+    "pnpm-lock.yaml",
+    "tools/oxlint/anti-slop/**"
+  ]
+}

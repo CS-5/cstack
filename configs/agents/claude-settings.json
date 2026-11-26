@@ -1,0 +1,61 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mise run check)",
+      "Bash(mise run typecheck)",
+      "Bash(mise run lint)",
+      "Bash(mise run fmt:check)",
+      "Bash(mise run test)",
+      "Bash(mise run build)",
+      "Bash(mise run fix)",
+      "Bash(mise run fmt)",
+      "Bash(mise run lint:fix)",
+      "Bash(mise run db:generate)",
+      "Bash(mise run db:migrate:local)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)"
+    ],
+    "deny": [
+      "Bash(git push)",
+      "Bash(git push *)",
+      "Bash(git -C * push*)",
+      "Bash(mise run deploy)",
+      "Bash(mise run deploy *)",
+      "Bash(mise run db:migrate:remote)",
+      "Bash(mise run db:migrate:remote *)",
+      "Bash(bun run deploy)",
+      "Bash(bun run deploy *)",
+      "Bash(bun run db:migrate:remote)",
+      "Bash(bun run db:migrate:remote *)",
+      "Bash(pnpm deploy *)",
+      "Bash(pnpm run deploy *)",
+      "Bash(pnpm db:migrate:remote *)",
+      "Bash(pnpm run db:migrate:remote *)",
+      "Bash(cf deploy *)",
+      "Bash(cf * --remote*)",
+      "Bash(bunx cf deploy *)",
+      "Bash(bunx cf * --remote*)",
+      "Bash(pnpm exec cf deploy *)",
+      "Bash(pnpm exec cf * --remote*)",
+      "Bash(wrangler)",
+      "Bash(wrangler *)",
+      "Bash(bunx wrangler *)",
+      "Bash(pnpm dlx wrangler *)",
+      "Bash(npx wrangler *)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mise x -- hk agent stop-hook --target claude-code --timeout 570",
+            "timeout": 600
+          }
+        ]
+      }
+    ]
+  }
+}

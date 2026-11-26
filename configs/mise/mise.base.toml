@@ -1,0 +1,79 @@
+# Base mise.toml template for TypeScript projects (Bun default).
+# Pin exact versions in new projects and commit mise.lock.
+
+[settings]
+lockfile = true
+minimum_release_age = "7d"
+# Versions come only from [tools]: under paranoid trust, reading package.json
+# revokes trust after every dependency change.
+idiomatic_version_file_enable_tools = []
+
+[tools]
+bun = "latest"
+hk = "latest"
+
+[env]
+_.path = ["{{config_root}}/node_modules/.bin"]
+
+[hooks]
+postinstall = "bun install --frozen-lockfile"
+
+[tasks.install]
+description = "Install dependencies"
+run = "bun install --frozen-lockfile"
+sources = ["package.json", "bun.lock"]
+outputs = ["node_modules/.bun"]
+
+[tasks.dev]
+description = "Start local development server"
+depends = ["install"]
+run = "bun run dev"
+
+[tasks.build]
+description = "Production build"
+depends = ["install"]
+run = "bun run build"
+
+[tasks.typecheck]
+description = "Typecheck all TypeScript projects"
+depends = ["install"]
+run = "bun run typecheck"
+
+[tasks.lint]
+description = "Run type-aware oxlint (warnings fail)"
+depends = ["install"]
+run = "bun run lint"
+
+[tasks."lint:fix"]
+description = "Run oxlint with autofix"
+depends = ["install"]
+run = "bun run lint:fix"
+
+[tasks.fmt]
+description = "Format with oxfmt"
+depends = ["install"]
+run = "bun run fmt"
+
+[tasks."fmt:check"]
+description = "Verify formatting with oxfmt"
+depends = ["install"]
+run = "bun run fmt:check"
+
+[tasks.test]
+description = "Run high-signal tests"
+depends = ["install"]
+run = "bun run test"
+
+[tasks.check]
+description = "Full verification gate: typecheck, lint, fmt:check, test"
+depends = ["install"]
+run = "bun run check"
+
+[tasks.fix]
+description = "Format and autofix lint across the repo"
+depends = ["install"]
+run = "hk fix --all"
+
+[tasks."hooks:install"]
+description = "Install git hooks via hk"
+run = "hk install --mise"

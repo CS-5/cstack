@@ -1,0 +1,16 @@
+{
+  "description": "Turn-end verification hook matching .claude/settings.json.",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$(git rev-parse --show-toplevel)\" && mise x -- hk agent stop-hook --target codex --timeout 570",
+            "timeout": 600
+          }
+        ]
+      }
+    ]
+  }
+}

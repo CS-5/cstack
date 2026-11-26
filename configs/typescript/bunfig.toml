@@ -1,0 +1,6 @@
+[install]
+# 7-day release-age gate (604800 seconds).
+minimumReleaseAge = 604800
+
+# Explicit exceptions only for owned packages or approved trusted vendors—never default.
+# minimumReleaseAgeExcludes = []
